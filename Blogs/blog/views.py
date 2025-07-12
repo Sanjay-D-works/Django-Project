@@ -6,8 +6,8 @@ from django.urls import reverse
 def index(request):
     return render(request,"index.html")
 
-def details(request, post_id):
-    return HttpResponse(f"You are viewing post detail page/ And ID is {post_id}")
+def detail(request, post_id):
+    return render(request,"detail.html")
 
 def old_url_redirect(request):
     return redirect(reverse("blog:new_page_url"))
