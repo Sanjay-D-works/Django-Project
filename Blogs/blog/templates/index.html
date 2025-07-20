@@ -19,11 +19,11 @@
                   <div class="card-body h-100 d-flex align-items-center">
                     <div class="row w-100">
                       <div class="col-md-4 d-flex align-items-center">
-                        <img src="https://via.placeholder.com/300" class="img-fluid" alt="...">
+                        <img  style="width: 150px; height: 150px; object-fit: cover;" src="{{ post.img_url }}" class="img-fluid" alt="Blog Image">
                       </div>
                       <div class="col-md-8 d-flex flex-column justify-content-center">
                         <h5 class="card-title">{{ post.title }}</h5>
-                        <p class="card-text">{{ post.content }}</p>
+                        <p class="card-text">{{ post.content | truncatechars:30}}</p>
                         <div class="d-flex justify-content-between">
                           <a href="{% url 'blog:detail' post_id=post.id %}">Read More</a>
 
