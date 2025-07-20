@@ -3,6 +3,7 @@ from django.http import HttpResponse
 from django.urls import reverse
 from .models import Post
 import logging
+from django.http import Http404 
 
 
 
@@ -33,9 +34,12 @@ def detail(request, post_id):
     # static data
     # post  next((item for item in posts f item['id] == int(post_id)),None)
 
-    # getting data from model by post id 
-    post = Post.objects.get(pk=post_id)
-
+    try:
+        # getting data from model by post id 
+        post = Post.objects.get(pk=post_id)
+    except Post.DoesNotExist:
+        raise Http404("Post Does Not Exist!")
+    
     # logger = logging.getLogger("Testing")
     # logger.debug(f'post variable is {post}')
     return render(request, "detail.html", {'post': post})
