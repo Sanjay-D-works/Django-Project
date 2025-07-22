@@ -37,12 +37,14 @@ def detail(request, slug):
     try:
         # getting data from model by post id 
         post = Post.objects.get(slug=slug)
+        related_posts = Post.objects.filter(category = post.category).exclude(pk=post.id)
+
     except Post.DoesNotExist:
         raise Http404("Post Does Not Exist!")
     
     # logger = logging.getLogger("Testing")
     # logger.debug(f'post variable is {post}')
-    return render(request, "detail.html", {'post': post})
+    return render(request, "detail.html", {'post': post, 'related_posts':related_posts})
     
 
 
