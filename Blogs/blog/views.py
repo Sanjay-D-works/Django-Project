@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
 from django.urls import reverse
-from .models import Post
+from .models import Post, AboutUs
 import logging
 from django.http import Http404 
 from django.core.paginator import Paginator
@@ -81,4 +81,9 @@ def contact_view(request):
     else:
         form = ContactForm()
         return render(request, 'blog1/contact.html', {'form': form})
+    
+    
+def about_view(request):
+    about_content = AboutUs.objects.first().content
+    return render(request, "blog1/about.html", {'about_content':about_content})
     
