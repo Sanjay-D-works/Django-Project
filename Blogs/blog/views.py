@@ -34,7 +34,7 @@ def index(request):
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number) 
 
-    return render(request,"index.html", {'blog_title': blog_title,'page_obj': page_obj})
+    return render(request,"blog1/index.html", {'blog_title': blog_title,'page_obj': page_obj})
 
 def detail(request, slug):
     # static data
@@ -50,7 +50,7 @@ def detail(request, slug):
     
     # logger = logging.getLogger("Testing")
     # logger.debug(f'post variable is {post}')
-    return render(request, "detail.html", {'post': post, 'related_posts':related_posts})
+    return render(request, "blog1/detail.html", {'post': post, 'related_posts':related_posts})
     
 
 
@@ -74,9 +74,11 @@ def contact_view(request):
             logger.debug(f"POST Data is {form.cleaned_data['name']} {form.cleaned_data['email']} {form.cleaned_data['message']}")
             #send email or save in database
             success_message = 'Your Email has been sent!'
-            return render(request,'blog/contact.html', {'form':form,'success_message':success_message})
+            return render(request,'blog1/contact.html', {'form':form,'success_message':success_message})
         else:
             logger.debug('Form validation failure')
-        return render(request,'blog/contact.html', {'form':form, 'name': name, 'email':email, 'message': message})
-    return render(request,'blog/contact.html')
+        return render(request,'blog1/contact.html', {'form':form, 'name': name, 'email':email, 'message': message})
+    else:
+        form = ContactForm()
+        return render(request, 'blog1/contact.html', {'form': form})
     
