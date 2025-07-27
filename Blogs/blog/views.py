@@ -6,6 +6,7 @@ import logging
 from django.http import Http404 
 from django.core.paginator import Paginator
 from blog.forms import ContactForm, RegisterForm
+from django.contrib import messages
 
 
 
@@ -96,6 +97,9 @@ def register(request):
     if request.method == 'POST':
         form = RegisterForm(request.POST)
         if form.is_valid():
-            form.save() # user data created
-            print('Register Success!')
+            user = form.save(commit=False) # user data created
+            user.set_password(form.cleaned_data['password'])
+            user.save()
+            messages.success(request, 'Registeration Successfull. You can log in')
+            
     return render(request, 'blog1/register.html',{'form': form})
