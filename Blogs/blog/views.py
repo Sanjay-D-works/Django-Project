@@ -61,7 +61,7 @@ def old_url_redirect(request):
 def new_url_view(request):
     return HttpResponse("This the new URL")
 
-def contact_view(request):
+def contact(request):
     if request.method == 'POST':
         form = ContactForm(request.POST)
         name = request.POST.get('name')
@@ -83,7 +83,15 @@ def contact_view(request):
         return render(request, 'blog1/contact.html', {'form': form})
     
     
-def about_view(request):
-    about_content = AboutUs.objects.first().content
+def about(request):
+    about_content = AboutUs.objects.first()
+    if about_content is None or not about_content.content:
+        about_content = "Default content goes here."
+    else:
+        about_content = about_content.content
     return render(request, "blog1/about.html", {'about_content':about_content})
-    
+     
+def register(request):
+    if request.method == 'POST':
+        form
+    return render(request, 'blog1/register.html')
