@@ -7,39 +7,31 @@
                 <h3>Register</h3>
                 <div class="">
                     <!-- Error messages -->
-                    <div class="col-12">
-                        <span class="fw-bold">Username</span>
-                        <span class="text-danger">[Error message for username]</span>
-                    </div>
-                    <div class="col-12">
-                        <span class="fw-bold">Email</span>
-                        <span class="text-danger">[Error message for email]</span>
-                    </div>
-                    <div class="col-12">
-                        <span class="fw-bold">Password</span>
-                        <span class="text-danger">[Error message for password]</span>
-                    </div>
-                    <div class="col-12">
-                        <span class="fw-bold">Confirm Password</span>
-                        <span class="text-danger">[Error message for confirm password]</span>
-                    </div>
-                    <div class="col-12">
-                        <span class="text-danger">[Non-field error]</span>
-                    </div>
-                </div>
+                    {% for field in form  %}
+                        {% if field.errors %}
+                            <div class="col-12">
+                                <span class="fw-bold"> {{field.label_tag}} </span>
+                                {% for error in field.errors %}
+                                <span class="text-danger"> {{error}} </span>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                   
                 <div class="my-3">
                     <form method="post">
+                        {% csrf_token %}
                         <div class="form-group">
                             <label for="username" class="form-label">Username</label>
-                            <input type="text" class="form-control" id="username" name="username" value="">
+                            <input type="text" class="form-control" id="username" name="username" value="{{form.username.value|default:''}}">
                         </div>
                         <div class="form-group">
                             <label for="email" class="form-label">Email</label>
-                            <input type="email" class="form-control" id="email" name="email" value="">
+                            <input type="email" class="form-control" id="email" name="email" value="{{form.email.value|default:''}}">
                         </div>
                         <div class="form-group">
                             <label for="password" class="form-label">Password</label>
-                            <input type="password" class="form-control" id="password" name="password">
+                            <input type="password" class="form-control" id="password" name="password" value="">
                         </div>
                         <div class="form-group">
                             <label for="confirm_password" class="form-label">Confirm Password</label>

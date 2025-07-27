@@ -5,7 +5,7 @@ from .models import Post, AboutUs
 import logging
 from django.http import Http404 
 from django.core.paginator import Paginator
-from blog.forms import ContactForm
+from blog.forms import ContactForm, RegisterForm
 
 
 
@@ -92,6 +92,10 @@ def about(request):
     return render(request, "blog1/about.html", {'about_content':about_content})
      
 def register(request):
+    form = RegisterForm()
     if request.method == 'POST':
-        form
-    return render(request, 'blog1/register.html')
+        form = RegisterForm(request.POST)
+        if form.is_valid():
+            form.save() # user data created
+            print('Register Success!')
+    return render(request, 'blog1/register.html',{'form': form})
