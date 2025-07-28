@@ -5,8 +5,9 @@ from .models import Post, AboutUs
 import logging
 from django.http import Http404 
 from django.core.paginator import Paginator
-from blog.forms import ContactForm, RegisterForm
+from blog.forms import ContactForm,LoginForm, RegisterForm
 from django.contrib import messages
+from django.contrib.auth import authenticate, login as auth_login
 
 
 
@@ -103,3 +104,21 @@ def register(request):
             messages.success(request, 'Registeration Successfull. You can log in')
             
     return render(request, 'blog1/register.html',{'form': form})
+
+def login(request):
+    form = LoginForm()
+    if request.method == 'POST':
+    #login form
+        form = LoginForm(request.POST)
+        if form.is_valid():
+            username = form.cleaned_data['username']
+            password = form.cleaned_data['password']
+            user = authenticate(username=username, password=password)
+            if user is not None:
+                auth_login(request,user)
+                return redirect("/dashboard") #redirect to dashboard
+            print("Login Successful")
+    return render(request, 'blog1/login.html', {'form':form})
+
+def dashboard(request):
+    return render(request, 'blog1/dashboard.html')
