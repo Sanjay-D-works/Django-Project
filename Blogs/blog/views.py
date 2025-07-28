@@ -5,9 +5,13 @@ from .models import Post, AboutUs
 import logging
 from django.http import Http404 
 from django.core.paginator import Paginator
-from blog.forms import ContactForm,LoginForm, RegisterForm
+from blog.forms import ContactForm, ForgotPasswordForm,LoginForm, RegisterForm
 from django.contrib import messages
 from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
+from django.contrib.auth.tokens import default_token_generator
+from django.utils.http import urlsafe_base64_encode
+from django.utils.encoding import force_bytes
+from django.contrib.sites.shortcuts import get_current_site
 
 
 
@@ -128,3 +132,19 @@ def dashboard(request):
 def logout(request):
     auth_logout(request)
     return redirect("blog:index")
+
+def forgot_password(request):
+    if request.method == 'POST':
+        # form
+        ForgotPasswordForm(request.POST)
+        if form.is_valid():
+            email = form.cleaned_data['email']
+            user = User.objects.get(email=email)
+            # send email to reset password
+            token = default_token_generator.make_token(user)
+            uid = urlsafe_base64_encode(force_bytes(user.pk))
+            current_site = get_current_site(request) #127.0.0.1:8000 
+            subject = "Reset Password Requested"
+
+
+    return render(request, 'blog1/forgot_password.html')
