@@ -7,7 +7,7 @@ from django.http import Http404
 from django.core.paginator import Paginator
 from blog.forms import ContactForm,LoginForm, RegisterForm
 from django.contrib import messages
-from django.contrib.auth import authenticate, login as auth_login
+from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
 
 
 
@@ -124,3 +124,7 @@ def login(request):
 def dashboard(request):
     blog_title = "My Posts"
     return render(request, 'blog1/dashboard.html', {'blog_title':blog_title})
+
+def logout(request):
+    auth_logout(request)
+    return redirect("blog:index")
