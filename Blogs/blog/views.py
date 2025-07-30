@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
 from django.urls import reverse
-from .models import Post, AboutUs
+from .models import Category, Post, AboutUs
 import logging
 from django.http import Http404 
 from django.core.paginator import Paginator
@@ -130,7 +130,16 @@ def login(request):
 
 def dashboard(request):
     blog_title = "My Posts"
-    return render(request, 'blog1/dashboard.html', {'blog_title':blog_title})
+    # getting user posts
+    all_posts = Post.objects.all()
+
+    # Paginator
+    paginator = Paginator(all_posts,5)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number) 
+
+
+    return render(request, 'blog1/dashboard.html', {'blog_title':blog_title, 'page_obj':page_obj})
 
 def logout(request):
     auth_logout(request)
@@ -187,3 +196,8 @@ def reset_password(request, uidb64, token):
 
 
     return render(request, 'blog1/reset_password.html', {'form':form})
+
+
+def new_post(request):
+    categories = Category.objects.all()
+    return render(request, 'blog1/new_post.html',{'categories': categories})
