@@ -91,10 +91,14 @@ class PostForm(forms.ModelForm):
     def save(self, commit = ...):
 
         post = super().save(commit)
+        cleaned_data = super().clean()
 
-        img_url = "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/450px-No_image_available.svg.png"
-        
-        post.img_url = img_url
+        if cleaned_data.get('img_url'):
+            post.img_url = cleaned_data.get('img_url')
+        else:
+            img_url = "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/450px-No_image_available.svg.png"
+            post.img_url = img_url
+
         if commit:
             post.save()
         return post

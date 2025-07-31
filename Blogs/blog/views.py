@@ -131,7 +131,7 @@ def login(request):
 def dashboard(request):
     blog_title = "My Posts"
     # getting user posts
-    all_posts = Post.objects.all()
+    all_posts = Post.objects.filter(user=request.user)
 
     # Paginator
     paginator = Paginator(all_posts,5)
