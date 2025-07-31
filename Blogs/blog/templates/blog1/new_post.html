@@ -10,7 +10,8 @@
                 </div>
     
                 <div class="my-3">
-                    <form method="post">
+                    <form method="post" enctype="multipart/form-data">
+
                         {% csrf_token %}
                         <div class="form-group">
                             <label for="title" class="form-label">Title</label>
@@ -33,6 +34,9 @@
                                 {% endif %}
                             </select>
                         </div>
+
+                        
+
                        
                         <div class="my-3 d-flex justify-content-end">
                             <button type="submit" class="btn btn-primary">Create</button>
