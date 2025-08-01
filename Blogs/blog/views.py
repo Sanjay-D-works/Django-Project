@@ -188,7 +188,7 @@ def reset_password(request, uidb64, token):
             if user is not None and default_token_generator.check_token(user, token):
                 user.set_password(new_password)
                 user.save()
-                messages.success(request, 'Your password has been reset password sucessfully')
+                messages.success(request, 'Your password has been reset password successfully')
                 return redirect('blog:login')
             
             else:
@@ -210,3 +210,20 @@ def new_post(request):
             post.save()
             return redirect('blog:dashboard')
     return render(request,'blog1/new_post.html', {'categories': categories, 'form': form})
+
+
+def edit_post(request, post_id):
+    categories = Category.objects.all()
+    post = get_object_or_404(Post, id=post_id)
+    form = PostForm()
+
+    if request.method == 'POST':
+        #form
+        form = PostForm(request.POST, request.FILES, instance=post)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Post Updated Successfully')
+            return redirect('blog:dashboard')
+
+    return render(request, 'blog1/edit_post.html', {'categories':categories, 'post':post, 'form':form})
+

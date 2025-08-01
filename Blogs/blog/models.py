@@ -25,8 +25,9 @@ class Post(models.Model):
 
     @property
     def formatted_img_url(self):
-        url = set.img_url if self.img_url.__str__().startswith(('http://','https://')) else self.img_url
-        return url
+        if str(self.img_url).startswith(('http://','https://')):
+            return self.img_url
+        return self.img_url.url if self.img_url else ''
 
     def __str__(self):
         return self.title
