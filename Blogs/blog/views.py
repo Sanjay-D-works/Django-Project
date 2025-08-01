@@ -36,7 +36,7 @@ def index(request):
     blog_title = "Latest Posts"
 
     #getting post data by url
-    all_posts = Post.objects.all()
+    all_posts = Post.objects.filter(is_published=True)
 
     # Paginator
     paginator = Paginator(all_posts,5)
@@ -232,4 +232,11 @@ def delete_post(request, post_id):
     post = get_object_or_404(Post, id=post_id)
     post.delete()
     messages.success(request, 'Post Deleted Successfully!')
+    return redirect('blog:dashboard')
+
+def publish_post(request, post_id):
+    post = get_object_or_404(Post, id=post_id)
+    post.is_published = True
+    post.save()
+    messages.success(request, 'Post Published Successfully!')
     return redirect('blog:dashboard')
