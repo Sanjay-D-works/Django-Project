@@ -222,8 +222,14 @@ def edit_post(request, post_id):
         form = PostForm(request.POST, request.FILES, instance=post)
         if form.is_valid():
             form.save()
-            messages.success(request, 'Post Updated Successfully')
+            messages.success(request, 'Post Updated Successfully!')
             return redirect('blog:dashboard')
 
     return render(request, 'blog1/edit_post.html', {'categories':categories, 'post':post, 'form':form})
 
+
+def delete_post(request, post_id):
+    post = get_object_or_404(Post, id=post_id)
+    post.delete()
+    messages.success(request, 'Post Deleted Successfully!')
+    return redirect('blog:dashboard')
