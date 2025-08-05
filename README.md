@@ -28,35 +28,45 @@ Tools: Django Admin, Python logging
 🔧 Setup Instructions
 
 1: Clone the repository
+
 bash
 git clone https://github.com/Sanjay-D-works/Django-Project.git
+
 cd your-repo-name
 
 2: Create and activate a virtual environment
+
 bash
+
 python -m venv env
+
 env\Scripts\activate  # On Windows
 
 3: Install dependencies
+
 bash
+
 pip install -r requirements.txt
 
 4: Apply migrations
+
 bash
+
 python manage.py migrate
 
 5: Run the development server
+
 bash
+
 python manage.py runserver
 
 6: Open your browser and go to:
+
 http://127.0.0.1:8000/
 
 
 📂 Project Structure (Simplified)
-csharp
-Copy
-Edit
+
 Django-Project/
 
 ├── blog/              # App with models, views, templates
@@ -66,6 +76,7 @@ Django-Project/
 ├── templates/         # HTML templates
 
 ├── static/            # CSS, JS, images
+
 ├── manage.py
 
 ✅ Status
