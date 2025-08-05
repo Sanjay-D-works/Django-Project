@@ -15,7 +15,7 @@ from django.utils.encoding import force_bytes
 from django.contrib.sites.shortcuts import get_current_site
 from django.template.loader import render_to_string
 from django.core.mail import send_mail
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib.auth.models import Group
 
 
@@ -207,6 +207,7 @@ def reset_password(request, uidb64, token):
 
 
 @login_required
+@permission_required('blog.add_post', raise_exception=True)
 def new_post(request):
     categories = Category.objects.all()
     form = PostForm()
@@ -222,6 +223,7 @@ def new_post(request):
 
 
 @login_required
+@permission_required('blog.change_post', raise_exception=True)
 def edit_post(request, post_id):
     categories = Category.objects.all()
     post = get_object_or_404(Post, id=post_id)
@@ -239,6 +241,7 @@ def edit_post(request, post_id):
 
 
 @login_required
+@permission_required('blog.delete_post', raise_exception=True)
 def delete_post(request, post_id):
     post = get_object_or_404(Post, id=post_id)
     post.delete()
@@ -246,6 +249,7 @@ def delete_post(request, post_id):
     return redirect('blog:dashboard')
 
 @login_required
+@permission_required('blog.can_publish', raise_exception=True)
 def publish_post(request, post_id):
     post = get_object_or_404(Post, id=post_id)
     post.is_published = True
