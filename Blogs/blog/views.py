@@ -48,6 +48,9 @@ def index(request):
     return render(request,"blog1/index.html", {'blog_title': blog_title,'page_obj': page_obj})
 
 def detail(request, slug):
+    if  request.user and not request.user.has_perm('blog.view_post'):
+        messages.error(request, 'You have no permission to view any posts.')
+        return redirect('blog:index')
     # static data
     # post  next((item for item in posts f item['id] == int(post_id)),None)
 

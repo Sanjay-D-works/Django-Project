@@ -12,6 +12,7 @@
       <!-- Main Content -->
       <main class="container-fluid flex-grow-1">
         <div class="row m-3">
+          {% include 'includes/error.html' %}
           {% if page_obj %}
               {% for post in page_obj%}
               <div class="col-4 mb-4">
