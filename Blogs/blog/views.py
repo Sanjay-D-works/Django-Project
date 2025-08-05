@@ -16,6 +16,7 @@ from django.contrib.sites.shortcuts import get_current_site
 from django.template.loader import render_to_string
 from django.core.mail import send_mail
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import Group
 
 
 
@@ -109,6 +110,9 @@ def register(request):
             user = form.save(commit=False) # user data created
             user.set_password(form.cleaned_data['password'])
             user.save()
+            # add user to default group 
+            readers_group,created = Group.objects.get_or_create(name="Readers")
+            user.groups.add(readers_group)
             messages.success(request, 'Registeration Successfull. You can log in')
             return redirect("blog:login")
             
