@@ -10,8 +10,11 @@
               <div>
                   <h2>Your Groups:</h2>
                   <ul>
-                      <li>[GROUP NAME]</li>
+                    {% for group in user.groups.all %}
+                      <li>{{group.name}}</li>
+                    {% empty %}
                       <li>You are not a member of any groups.</li>
+                    {% endfor %}
                   </ul>
               </div>
           </div>
