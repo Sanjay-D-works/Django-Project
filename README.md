@@ -29,7 +29,7 @@ Tools: Django Admin, Python logging
 
 1: Clone the repository
 bash
-git clone https://github.com/your-username/your-repo-name.git
+git clone https://github.com/Sanjay-D-works/Django-Project.git
 cd your-repo-name
 
 2: Create and activate a virtual environment
@@ -58,9 +58,13 @@ csharp
 Copy
 Edit
 Django-Project/
+
 ├── blog/              # App with models, views, templates
+
 ├── Blogs/             # Project config (settings, urls)
+
 ├── templates/         # HTML templates
+
 ├── static/            # CSS, JS, images
 ├── manage.py
 
